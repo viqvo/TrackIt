@@ -1,0 +1,98 @@
+# -*- coding: utf-8 -*-
+### required - do no delete
+
+def user(): return dict(form=auth())
+def download(): return response.download(request,db)
+
+def call():
+    session.forget()
+    return service()
+
+# this is the Ajax callback
+@auth.requires_login()
+def follow():
+   if request.env.request_method!='POST': raise HTTP(400)
+   if request.args(0) =='follow' and not db.followers(follower=me,followee=request.args(1)):
+       # insert a new friendship request
+       db.followers.insert(follower=me,followee=request.args(1))
+   elif request.args(0)=='unfollow':
+       # delete a previous friendship request
+       db(db.followers.follower==me)(db.followers.followee==request.args(1)).delete()
+
+   
+                
+### end requires
+
+@auth.requires_login()
+def index():
+  #  me_and_my_followees = [me]+[row.followee for row in my_followees.select(db.followers.followee)]
+    
+    followers = db(db.followers.follower==me).select()
+    
+    return locals()
+
+    # return dict(my_followees=my_followees, me_and_my_followees=me_and_my_followees)
+
+
+# a page for searching for other users
+@auth.requires_login()
+def search():
+   form = SQLFORM.factory(Field('name',requires=IS_NOT_EMPTY()))
+   if form.accepts(request):
+       tokens = form.vars.name.split()
+       query = reduce(lambda a,b:a&b,
+                      [db.auth_user.first_name.contains(k)|db.auth_user.last_name.contains(k) \
+                           for k in tokens])
+       people = db(query).select(orderby=db.auth_user.first_name|db.auth_user.last_name,left=db.followers.on(db.followers.followee==db.auth_user.id))
+   else:
+       people = []
+   return locals()
+
+def error():
+    return dict()
+
+
+@auth.requires_login()
+def mycal():
+    rows=db(db.t_appointment.created_by==auth.user.id).select()
+    return dict(rows=rows)
+
+@auth.requires_login()
+def appointment_create():
+#    select_imagefiles=db(db.images_table.uploader==auth.user.id).select()
+    
+    form=crud.create(db.t_appointment, 
+                     onvalidation=geocode2,
+                     next='appointment_read/[id]')
+    newform = crud.create(db.images_table, onvalidation=geocode2, next='appointment_read/[id]')
+    return dict(form=form, newform=newform)
+
+@auth.requires_login()
+def appointment_read():
+    record = db.t_appointment(request.args(0)) or redirect(URL('error'))
+    form=crud.read(db.t_appointment,record)
+    return dict(form=form)
+
+	
+@auth.requires_login()
+def appointment_update():
+    record = db.t_appointment(request.args(0),active=True) or redirect(URL('error'))
+    form=crud.update(db.t_appointment,record,next='appointment_read/[id]',
+                     onvalidation=geocode2,
+                     ondelete=lambda form: redirect(URL('appointment_select')),
+                     onaccept=crud.archive)
+    return dict(form=form)
+
+@auth.requires_login()
+# people = db(query).select(orderby=db.auth_user.first_name|db.auth_user.last_name,left=db.followers.on(db.followers.followee==db.auth_user.id))
+def appointment_select():
+    f,v=request.args(0),request.args(1)
+    query=f and db.t_appointment[f]==v or db.t_appointment
+    rows=db(query)(db.t_appointment.active==True).select()
+    
+    return dict(rows=rows)
+
+@auth.requires_login()
+def appointment_search():
+    form, rows=crud.search(db.t_appointment,query=db.t_appointment.active==True)
+    return dict(form=form, rows=rows)

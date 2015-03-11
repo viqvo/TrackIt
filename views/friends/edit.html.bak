@@ -1,0 +1,93 @@
+{{extend 'layout.html'}}
+
+<h1>Your Friends</h1>
+
+<div id="friend_list">
+
+</div>
+
+<style>
+tr#submit_record__row { border-top: 0px solid #dddddd; }
+</style>
+
+{{=form}}
+
+{{block head}}
+<script>
+  var get_friend_url = "{{=get_friend_url}}";
+  var add_friend_url = "{{=add_friend_url}}";
+  var del_friend_url = "{{=del_friend_url}}";
+  
+  jQuery(document).ready(function(){
+  
+	var stdiv = $("tr#no_table_friends__row td.w2p_fw");
+    var errorloc = $("tr#no_table_add_friends__row td.w2p_fw");
+    
+    function render(s) {
+	    	return '<span class="email-addr">' + s + 
+	    	   '<span class="ui-icon ui-icon-close email-close"></span></span>'
+    }
+    
+    function render_list(friend_list) {
+    		if (friend_list.length === 0) {
+    		    	stdiv.html("None");
+    		} else {
+    			stdiv.empty();
+    			for (var i = 0; i < friend_list.length; i++) {
+    				var s = friend_list[i];
+    				stdiv.append(render(s));
+    			}
+    		}    
+    }
+    
+    function show_error(error_msg) {
+    		s = '<div class="error_wrapper"><div class="error" id="observers__error" style="display: block;">';
+    		s = s + error_msg + '</div></div>';
+    		errorloc.append(s);
+    }
+    
+    function hide_error() {
+    		errorloc.find(".error_wrapper").remove();
+    }
+    
+    // This is the code that renders the list of current friends.	  
+    // THIS is AJAX, AJAJ rather.  	
+    jQuery.get(get_friend_url, function(data) {
+    		var friend_list = data["friends"]
+    		render_list(friend_list);
+    }, 'json');
+    
+    
+    stdiv.on("click", ".email-close", function(e) {
+    	hide_error();
+    	var email = $(this).parent().text();
+    	var msg = "friend=" + JSON.stringify(email);
+    	jQuery.post(del_friend_url, msg, function(data) {
+    		if (data["msg"] === "ok") {
+	    		$(e.target).parent().remove();
+	    	}
+    	}, 'json');
+    });
+    
+    jQuery("#email-form").submit(function (e) {
+    	hide_error();
+    	var new_emails = $("#no_table_add_friends").val();
+    	var msg = "friends=" + JSON.stringify(new_emails);
+    	jQuery.post(add_friend_url, msg, function(data) {
+    		if (data["msg"] === "ok") {
+    			var friends = data["friends"];
+    			render_list(friends);
+    			$("#no_table_add_friends").val('');
+    		} else {
+    			show_error(data["msg"]);
+    		}
+        	// Re-enables the submit button, which is otherwise disabled by web2py.
+    		var b = $('#email-form input[type="submit"]');
+    		jQuery.web2py.enableElement(b);
+    	}, 'json');
+    	e.preventDefault();
+    });
+    
+  });
+</script>
+{{end}}

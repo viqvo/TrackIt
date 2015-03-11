@@ -1,0 +1,6 @@
+{{extend 'layout.html'}}
+
+<h1>Welcome to Trackit!</h1>
+<i>Tracking down the dates together</i><br/><br/>
+
+An interactive calendar where you and your friends can get together and plan an event. Add comments and upload photos to add more details regarding the event. Anybody who has registered into this webpage can see the events that are going on. The calendar is your own so you will not see every event on it except for the ones you've created. Easily manage events and organize your life with one simple site!

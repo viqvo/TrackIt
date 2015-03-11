@@ -1,0 +1,16 @@
+response.title = settings.title
+response.subtitle = settings.subtitle
+response.meta.author = '%s <%s>' % (settings.author, settings.author_email)
+response.meta.keywords = settings.keywords
+response.meta.description = settings.description
+response.menu = [
+    (T('Index'),URL('index')==URL(),URL('index'),[]),
+    (T('Create'),URL('appointment_create')==URL(),URL('appointment_create'),[]),
+    (T('View Events'),URL('appointment_select')==URL(),URL('appointment_select'),[]),
+    (T('Search Event'),URL('appointment_search')==URL(),URL('appointment_search'),[]),
+    (T('Calendar'),URL('mycal')==URL(),URL('mycal'),[]),
+   # (T('Pictures'),URL('picture')==URL(),URL('picture'),[]),
+    (T('Explore People'),URL('search')==URL(),URL('search'),[]),
+
+
+]

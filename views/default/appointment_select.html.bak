@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+
+<h2>View List</h2>
+{{if request.args:}}<h3>{{=T('For %s #%s' % (request.args(0)[2:],request.args(1)))}}</h3>{{pass}}
+
+
+{{if rows:}}
+
+  {{headers=dict((str(k),k.label) for k in db.t_appointment)}}
+
+  {{=SQLTABLE(rows,headers=headers)}}
+{{else:}}
+  {{=TAG.blockquote(T('No Data'))}}
+
+{{pass}}
