@@ -9,7 +9,7 @@ response.menu = [
     (T('View Events'),URL('appointment_select')==URL(),URL('appointment_select'),[]),
     (T('Search Event'),URL('appointment_search')==URL(),URL('appointment_search'),[]),
     (T('Calendar'),URL('mycal')==URL(),URL('mycal'),[]),
-   # (T('Pictures'),URL('picture')==URL(),URL('picture'),[]),
+   # (T('Pictures'),URL('picture')==URL(),URL('picture'),[]),#
     (T('Explore People'),URL('search')==URL(),URL('search'),[]),
 
 
