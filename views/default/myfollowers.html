@@ -1,0 +1,17 @@
+{{extend 'layout.html'}}
+<h2>My Followers</h2>
+
+
+{{if people:}}<center>
+
+{{for friends in people:}}
+<div class="row">
+<div class="span1"> {{if friends.followers.followee==me:}}
+<div class="span3 offset1">{{=name_of(friends.auth_user) }}</div>
+<button onclick="ajax('{{=URL('follow',args=('unfollow',friends.auth_user.id))}}',[],null);$(this).parent().html('Unfollowed')">Unfollow</button>
+
+{{pass}}
+</div>
+</div>
+{{pass}}</center>
+{{pass}}

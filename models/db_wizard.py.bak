@@ -3,7 +3,7 @@
 
 ########################################
 db.define_table('t_appointment',
-    Field('id','id', readable=False,
+    Field('id','id', readable=True,
           represent=lambda id:SPAN(id,' ',A('view',_href=URL('appointment_read',args=id)))),
     Field('f_title', type='string', notnull=True,
           label=T('Title')),
@@ -30,7 +30,7 @@ db.define_table('t_appointment',
     format='%(f_title)s',
     migrate=settings.migrate)
 
-
+db.t_appointment.image.readable=False
 db.define_table('t_appointment_archive',db.t_appointment,Field('current_record','reference t_appointment'))
 
 db.define_table('images_table', 
@@ -41,7 +41,6 @@ db.define_table('images_table',
 
 db.define_table('followers',
    Field('user_id', db.auth_user, default=auth.user_id),
-
    Field('follower','reference auth_user'), #who follows u
    Field('followee','reference auth_user')) #who you follow
 #Convenience methods to make code more compact

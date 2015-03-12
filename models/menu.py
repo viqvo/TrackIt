@@ -11,6 +11,7 @@ response.menu = [
     (T('My Calendar'),URL('mycal')==URL(),URL('mycal'),[]),
    # (T('Pictures'),URL('picture')==URL(),URL('picture'),[]),
     (T('Explore People'),URL('search')==URL(),URL('search'),[]),
+    (T('Who I follow'),URL('ifollow')==URL(),URL('ifollow'),[]),
 
 
 ]

@@ -3,6 +3,9 @@
 <h2>Read appointment</h2>
 {{=A(T('edit appointment'),_href=URL('appointment_update',args=request.args(0)))}}
 <br/>
+{{if form.record.image:}}
+<center>{{=IMG (_src=URL('download',args=form.record.image), _width='320', _height='240')}}</center>
+{{pass}}
 
 {{=form}}
 

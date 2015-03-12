@@ -1,0 +1,13 @@
+{{extend 'layout.html'}}
+<h2>My following</h2>
+
+
+{{if followlist:}}<center>
+
+{{for p in followlist:}}
+{{=name_of(p.followee)}}<br/>
+<button onclick="ajax('{{=URL('follow',args=('unfollow', p.followee))}}',[],null);$(this).parent().html('Unfollowed!')">Unfollow</button><br/><br/>
+{{pass}}
+
+</center>
+{{pass}}
