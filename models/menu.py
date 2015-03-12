@@ -8,8 +8,13 @@ response.menu = [
     (T('Create'),URL('appointment_create')==URL(),URL('appointment_create'),[]),
     (T('View Events'),URL('appointment_select')==URL(),URL('appointment_select'),[]),
     (T('Search Event'),URL('appointment_search')==URL(),URL('appointment_search'),[]),
+<<<<<<< HEAD
     (T('My Calendar'),URL('mycal')==URL(),URL('mycal'),[]),
    # (T('Pictures'),URL('picture')==URL(),URL('picture'),[]),
+=======
+    (T('Calendar'),URL('mycal')==URL(),URL('mycal'),[]),
+   # (T('Pictures'),URL('picture')==URL(),URL('picture'),[]),#
+>>>>>>> origin/master
     (T('Explore People'),URL('search')==URL(),URL('search'),[]),
 
 
