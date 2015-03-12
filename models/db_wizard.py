@@ -30,7 +30,7 @@ db.define_table('t_appointment',
     format='%(f_title)s',
     migrate=settings.migrate)
 
-
+db.t_appointment.image.readable=False
 db.define_table('t_appointment_archive',db.t_appointment,Field('current_record','reference t_appointment'))
 
 db.define_table('images_table', 
@@ -54,3 +54,4 @@ def geocode2(form):
     lo,la= geocode(form.vars.f_location+' USA')
     form.vars.f_latitude=la
     form.vars.f_longitude=lo
+
