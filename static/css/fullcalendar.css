@@ -209,7 +209,7 @@ table.fc-header {
 	}
 	
 .fc-content .fc-state-highlight { /* today */
-	background: #ffc;
+	background: rgba(0,0,0,0.5);
 	}
 	
 .fc-content .fc-not-today {
