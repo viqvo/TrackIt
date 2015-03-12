@@ -89,7 +89,7 @@ def appointment_select():
     f,v=request.args(0),request.args(1)
     query=f and db.t_appointment[f]==v or db.t_appointment
     rows=db(query)(db.t_appointment.active==True).select()
-    
+   # rows = db(query)(db.followers.user_id>1).select() 
     return dict(rows=rows)
 
 @auth.requires_login()

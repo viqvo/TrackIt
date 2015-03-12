@@ -8,13 +8,11 @@
 {{for friends in people:}}
 <div class="row">
 <div class="span3 offset1">{{=A(name_of(friends.auth_user), _href=URL('wall',args=friends.auth_user.id))}}</div>
-<div class="span1">
-{{if friends.followers.followee:}}
+<div class="span1"> {{if friends.followers.followee:}}
 <button onclick="ajax('{{=URL('follow',args=('unfollow',friends.auth_user.id))}}',[],null);$(this).parent().html('Unfollowed')">Unfollow</button>
-{{else:}}
-<button onclick="ajax('{{=URL('follow',args=('follow',friends.auth_user.id))}}',[],null);$(this).parent().html('Followed')">Follow</button>
+{{else:}} <button onclick="ajax('{{=URL('follow',args=('follow',friends.auth_user.id))}}',[],null);$(this).parent().html('Followed')">Follow</button>
 {{pass}}
 </div>
-</div></center>
-{{pass}}
+</div>
+{{pass}}</center>
 {{pass}}
