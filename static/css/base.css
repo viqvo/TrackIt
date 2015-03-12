@@ -286,9 +286,12 @@ code {
 
 /*********** left and right padding to quoted text ***********/
 blockquote {
-   background: #cccccc;
+   color: #fff;
+   font-size: 12px;
+   background: rgba(0, 0, 0, 0.7);
    border-left: 30px transparent;
    border-right: 30px transparent;
+   padding: 5px 10px 5px 10px;
    /*padding: 5px;*/
 }
 

@@ -282,3 +282,16 @@
 [2015-03-11 10:21:52] EDIT h/models/menu.py: 0
 [2015-03-11 10:21:54] EDIT h/models/db_wizard.py: 0
 [2015-03-11 10:22:06] EDIT h/controllers/default.py: 0
+[2015-03-11 18:22:33] EDIT merged/controllers/default.py: 1
+[2015-03-11 18:25:38] EDIT merged/controllers/default.py: 0
+[2015-03-11 18:26:12] EDIT merged/controllers/default.py: 1
+[2015-03-11 18:27:08] EDIT merged/controllers/default.py: 0
+[2015-03-11 18:28:11] EDIT merged/views/default/appointment_create.html: -1
+[2015-03-11 18:28:25] EDIT merged/models/db_wizard.py: 1
+[2015-03-11 18:29:11] EDIT merged/static/css/base.css: 3
+[2015-03-11 18:31:11] EDIT merged/controllers/default.py: 0
+[2015-03-11 18:31:20] EDIT merged/controllers/default.py: 0
+[2015-03-11 18:32:09] EDIT merged/models/db_wizard.py: 0
+[2015-03-11 18:32:20] EDIT merged/models/db_wizard.py: 0
+[2015-03-11 18:32:38] EDIT merged/models/db_wizard.py: 0
+[2015-03-11 18:35:31] EDIT merged/models/db_wizard.py: 0

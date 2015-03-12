@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 ### required - do no delete
 
+from datetime import datetime
+
 def user(): return dict(form=auth())
 def download(): return response.download(request,db)
 
@@ -23,16 +25,11 @@ def follow():
                 
 ### end requires
 
-@auth.requires_login()
 def index():
   #  me_and_my_followees = [me]+[row.followee for row in my_followees.select(db.followers.followee)]
-    
     followers = db(db.followers.follower==me).select()
-    
     return locals()
-
     # return dict(my_followees=my_followees, me_and_my_followees=me_and_my_followees)
-
 
 # a page for searching for other users
 @auth.requires_login()
@@ -51,7 +48,6 @@ def search():
 def error():
     return dict()
 
-
 @auth.requires_login()
 def mycal():
     rows=db(db.t_appointment.created_by==auth.user.id).select()
@@ -60,12 +56,12 @@ def mycal():
 @auth.requires_login()
 def appointment_create():
 #    select_imagefiles=db(db.images_table.uploader==auth.user.id).select()
-    
     form=crud.create(db.t_appointment, 
                      onvalidation=geocode2,
                      next='appointment_read/[id]')
-    newform = crud.create(db.images_table, onvalidation=geocode2, next='appointment_read/[id]')
-    return dict(form=form, newform=newform)
+    #newform = crud.create(db.images_table, onvalidation=geocode2, next='appointment_read/[id]')
+    #return dict(form=form, newform=newform)
+    return dict(form=form)
 
 @auth.requires_login()
 def appointment_read():
@@ -76,7 +72,7 @@ def appointment_read():
 	
 @auth.requires_login()
 def appointment_update():
-    record = db.t_appointment(request.args(0),active=True) or redirect(URL('error'))
+    record = db.t_appointment(request.args(0)) or redirect(URL('error'))
     form=crud.update(db.t_appointment,record,next='appointment_read/[id]',
                      onvalidation=geocode2,
                      ondelete=lambda form: redirect(URL('appointment_select')),
@@ -86,13 +82,14 @@ def appointment_update():
 @auth.requires_login()
 # people = db(query).select(orderby=db.auth_user.first_name|db.auth_user.last_name,left=db.followers.on(db.followers.followee==db.auth_user.id))
 def appointment_select():
+    present = datetime.now()
+    q = db.t_appointment.f_end_time > present
     f,v=request.args(0),request.args(1)
     query=f and db.t_appointment[f]==v or db.t_appointment
-    rows=db(query)(db.t_appointment.active==True).select()
-   # rows = db(query)(db.followers.user_id>1).select() 
+    rows=db(q).select()
     return dict(rows=rows)
 
 @auth.requires_login()
 def appointment_search():
-    form, rows=crud.search(db.t_appointment,query=db.t_appointment.active==True)
+    form, rows=crud.search(db.t_appointment)
     return dict(form=form, rows=rows)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# try something like this
+# try something like
 import json
 import re
 
