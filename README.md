@@ -24,4 +24,8 @@ Explore People: this is where you can search for your friends and to follow them
                 if you search for someone that doesn't exist, it will return nothing.
 
 Helpful sources that were used:
+https://github.com/mdipierro/web2py-appliances/tree/master/AppointmentManager
+
+http://www.htmlcommentbox.com/
+
 
